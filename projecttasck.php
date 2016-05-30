@@ -58,29 +58,88 @@ $(document).ready(function() {
 										
 									 </div>	
 									 <div class="col-md-5 col-sm-5 col-xs-5">
+									 
 										
-										<h4>	<input type="text"  ng-model="projheading" style="border: none" ></h4>
-										
+									
+									<ul class="nav navbar-nav">
+											<li class="dropdown">
+												<h4>  {{projheading}} 	<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-chevron-down"></span>  </a>
+												<ul class="dropdown-menu">
+														<li><a href="" data-toggle="modal" data-target="#editnamedesModal" ng-click="editproject()" >Edit Name And Description </a></li>
+														<li class="divider"></li>
+														<li><a href="#">User stats </a></li>
+													
+												</ul>
+											</li>
+									</ul>
+									
+									
+									
 									 </div>	
 									  <div class="col-md-2 col-sm-2 col-xs-2">
+											
+										
 										
 									 </div>	
 									 
+									 <div class="col-md-12 col-sm-12 col-xs-12">
 									 
-									 
-							  </div>	
-						</div>
-				</div>		
+												<div class="col-md-11 col-sm-11 col-xs-11">
+										
+															
+												</div>			
+										
+												<div class="col-md-1 col-sm-1 col-xs-1">
+										
+										
+													<a href="" data-toggle="modal" data-target="#memberModal"> ADD MEMBERS </a>
+												
+										
+										<!--		
+												<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">	
+														<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-plus-sign"></i></button>
+												</a>	
+													<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+										
+													<div class="panel panel-default" style="width:500px">
+													<form >	
+														
+												
+																		
+															</div>
+															
+														
+														</div>
+													
+												</form>
+										
+													</div>
+										
+										
+										
+										
+														
+											
+													</ul>
+												-->	
+														
+														
+													
+												</div> 
+							
+									
+									</div>
+							</div>		
 				
                     <div class="row">
                      
 						 <div class="col-md-{{a}} col-sm-{{a}} col-xs-{{a}}">
-                            <div class="x_panel"  style="height:600px;">
+                            <div class="x_panel"  style="height:600px; overflow-x:auto;" >
 							
 						
 								   
 							
-								<button type="submit"  ng-click="addtasck()" class="btn btn-default">Add Tasck</button> 
+								<button type="submit"  ng-click="addtasck()" class="btn btn-default">Add Task</button> 
 												
 								<button ng-hide="sect" ng-mousemove="showsect()" type="submit"  class="btn btn-default">Add Section</button> 								
 									
@@ -91,6 +150,7 @@ $(document).ready(function() {
 									<input type="email" class="form-control" ng-model="username"  name="username" >
 									<input type="email" class="form-control" ng-model="sendto"  name="sendto" >
 									<input type="email" class="form-control" ng-model="subsendto"  name="subsendto" >
+									<input type="text"  ng-model="taid"> 
 									
 								</div>
 								
@@ -101,26 +161,36 @@ $(document).ready(function() {
 								
 								
 									<div class="form-actions">
-										<div  ng-repeat="taskInput in inputs">
+									
+										<!--div  ng-repeat="taskInput in inputs"-->
 										
-							
+										<div ng-hide="adtask">
 											<div class="input-group col-md-12 col-sm-12 col-xs-12">
 											 
+											 
+											 
+											 <input type="text" class="form-control" name="comment" ng-click="clicke()" ng-keyup="showtask(taskInput)" ng-model="taskInput" placeholder="Add New Task" >
+											 	 <span class="input-group-addon">
+															  
+																		<a href="" data-toggle="modal" data-target="#assigneeModal" ><i class="fa fa-user"></i>  </a>
+					
+												 </span>
+											 
+											 
+											 <!--
 															<input type="text" class="form-control" ng-click="clicke()" ng-keyup="showtask(taskInput.value)" name="taskkk" ng-model="taskInput.value" placeholder="Add New Task" >
 															  <span class="input-group-addon">
 															  
 																		<a href="" data-toggle="modal" data-target="#assigneeModal" ><i class="fa fa-user"></i>  </a>
 					
 															  </span>
+															  
+											-->				  
+															  
 														
 											</div>
 											
 											
-											
-											
-										
-											
-									
 											<div  class="input-group-btn">
 											
 													
@@ -128,22 +198,23 @@ $(document).ready(function() {
 												
 											<div ng-show="tasckbutton">
 											
-												<button  class="btn btn-default" type="submit" ng-click="addnewTask(taskInput.value,dedate)"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Task</button>
+											<!--	<button  class="btn btn-default" type="submit" ng-click="addnewTask(taskInput.value,dedate)"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Task</button>-->
 												
+												<button  class="btn btn-default" type="submit" ng-click="addnewTask(taskInput,dedate)"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Task</button>
 													
 											</div>
 												
 											
 										</div>
 										
+										<!-- task list-->
 										
 										<div ng-repeat="tas in tasks">
 											<div class="input-group col-md-12 col-sm-12 col-xs-12">
-											
-											
-														<lable class="form-control">{{tas.task}}</label>
-											 
+										
+												<label class="form-control" ng-click="tasklist(tas.tid)" >{{tas.task}}</label>	
 												
+											
 											</div>
 										</div>	
 										
@@ -183,7 +254,7 @@ $(document).ready(function() {
 													<i class="fa fa-user"></i>
 									</span>									
 								
-										<input type="text" class="form-control" name="comment" ng-model="sendto" placeholder="unassigned" >
+										<input type="text" class="form-control" name="sendto" ng-model="sendto" placeholder="unassigned" >
 									</div>	
 													
 								</div>
@@ -198,8 +269,6 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1">
 								
-					
-									
 											<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
 								
 								</div>
@@ -210,16 +279,33 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1">
 								
+										<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">	
 											<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-paperclip"></i></button>
+										</a>	
+										<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+										
+												<li><a href="" ng-click="attatch()"> Attach From Computer </a></li>
 											
+										</ul>
+										
 											
 								</div>
 								
 								<div class="col-md-1 col-sm-1 col-xs-1">
 								
-										<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-option-horizontal"></i></button>
-												
+										
+										
+										<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
+						
+													<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+						
+										</a>
+										<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+												<li><a href="" ng-click="deletetask(taid)"> Delete Task </a></li>
 											
+										</ul>
+										
+									
 								</div>
 								
 							</div>
@@ -258,12 +344,14 @@ $(document).ready(function() {
 								
 							</div>
 							
+					<form id="subtasckform" ng-model="subtasckform" name="subtasckform"> 
+							<!--sub task div -->
 							<div class="col-md-12 col-sm-12 col-xs-12" style="height:100px;">
 							
 								<div  ng-repeat="substak in subinput">
 									<div class="input-group col-md-12 col-sm-12 col-xs-12">
 											 
-										<input type="text" class="form-control" ng-click="clicke()"  name="stask" ng-model="substak.value" placeholder="Add Sub Task" >
+										<input type="text" class="form-control"  name="stask" ng-model="substak.value" placeholder="AddSubTask" >
 										  <span class="input-group-addon">
 								
 														<a href="" data-toggle="modal" data-target="#subassigneeModal" ><i class="fa fa-user"></i>  </a>
@@ -271,15 +359,101 @@ $(document).ready(function() {
 										  </span>
 																				
 									</div>
-								</div>	
+							
 									<div ng-show="subtasckbutton">
 											
 												<button  class="btn btn-default" type="submit" ng-click="addnewsubTask(substak.value)"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Task</button>
 												
 													
-											</div>
-
 									</div>
+								</div>	
+								
+								<!--sub task list-->
+							
+								
+								<div ng-repeat="subtas in subtasks">
+								
+									<div class="input-group col-md-12 col-sm-12 col-xs-12">
+									
+												<label class="form-control" >{{subtas.subtask}}</label>
+												
+									</div>
+									
+								</div>	
+								
+								
+								
+								<div ng-show="attfile" >
+								
+										
+								
+											
+											<div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="col-md-6 col-sm-6 col-xs-6">
+												
+													
+											
+												</div>
+												<div class="col-md-6 col-sm-6 col-xs-6">
+											
+												
+													
+											
+												</div>
+												
+											</div>
+											
+										
+									
+								</div>
+								
+								
+								
+								
+								
+								<div ng-show="scomment">
+					
+									<!--
+										<input type="text" class="form-control" name="shcommt" ng-model="shcommt">
+										-->
+										<div class="input-group col-md-12 col-sm-12 col-xs-12">
+										
+												<label class="control-label">COMMENTS</label> 
+										
+										</div>	
+										
+										<div ng-repeat="comm in comments">
+											<div class="input-group col-md-12 col-sm-12 col-xs-12">
+										
+													
+										<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
+						
+												<div class="input-group">
+														<label class="form-control">{{comm.comment}}</label>
+															
+																<span class="input-group-addon">
+																	<span class=" fa fa-angle-down"></span>
+																</span>	
+												</div>				
+						
+										</a>
+										<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+												<li><a href="" ng-click="deletetcomment(comm.cid)"> Delete Comments </a></li>
+											
+										</ul>	
+																
+					
+							
+											</div>
+										</div>	
+									
+								</div>
+								
+								
+
+							</div>
+	
+					</form>		
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								
@@ -295,7 +469,7 @@ $(document).ready(function() {
 						
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								
-								  <textarea class="form-control" rows="2" placeholder="Weite A Comment"></textarea>
+								  <textarea class="form-control" rows="2" ng-model="commt"  placeholder="Write A Comment"></textarea>
 								
 							</div>
 							
@@ -307,7 +481,7 @@ $(document).ready(function() {
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-2" style="padding-right:30px;">
 							
-										<button type="button" class="btn btn-info">Comment</button>
+										<button type="button" ng-click="addcomment()" class="btn btn-info">Comment</button>
 									
 							
 							</div>
@@ -423,11 +597,6 @@ $(document).ready(function() {
 																			
 								</div>	
 								
-							
-							
-									
-								
-							
 							</div>
 						
 					</div>
@@ -543,13 +712,211 @@ $(document).ready(function() {
 			</div>
 				
 			</form>			
-							
-							
-							
-							
-							
 						
 							<!--End TAsk-->
+							
+			<!-- Edit Name and Description -->
+		<form id="editnameform" ng-model="editnameform" name="editnameform" novalidate > 
+							
+				<div class="modal fade" id="editnamedesModal" role="dialog">
+					<div class="modal-dialog">
+    
+					<!-- Modal content-->
+					<div class="modal-content">
+							<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title"><b> Edit {{projheading}} </b></h4>
+							</div>
+							<div class="modal-body" style="height:200px">
+							
+							
+							
+								<div class="form-group">
+									<div class="col-sm-3" >
+										<label class="control-label" >PROJECT NAME</label>			
+									</div>	
+									<div class="col-sm-9" >
+										<input type="text" class="form-control" ng-model="editname"  name="editname" required>
+										
+										<div class="error" ng-show="editnameform.editname.$dirty && editnameform.editname.$invalid">
+																											
+														<small class="error" style="color:red" ng-show="editnameform.editname.$error.required">Project Name Is Required</small>
+													
+																	
+										</div>
+									</div>
+																					
+								</div>	
+						
+								<div class="form-group">
+								
+									<div class="col-sm-12" >
+									
+									</div>	
+									
+								
+																			
+								</div>
+								<div class="form-group">
+								
+									<div class="col-sm-12" >
+									
+									</div>	
+									
+								
+																			
+								</div>
+						
+						
+								<div class="form-group">
+								
+									<div class="col-sm-3" >
+												<label class="control-label" >PROJECT DESCRIPTION</label>			
+										</div>	
+										<div class="col-sm-9" >
+									
+												
+												<textarea class="form-control" name="editdescription" ng-model="editdescription" rows="2" required></textarea>
+										
+												<div class="error" ng-show="editnameform.editdescription.$dirty && editnameform.editdescription.$invalid">
+																											
+														<small class="error" style="color:red" ng-show="editnameform.editdescription.$error.required">Project Description Is Required</small>
+								
+																	
+												</div>
+									</div>
+									
+								
+																			
+								</div>
+									<div class="form-group">
+								
+									<div class="col-sm-12" >
+									
+									</div>	
+									
+								
+																			
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-10" >
+										
+									</div>	
+									<div class="col-sm-2" >
+									
+										<button type="submit" class="btn btn-primary" ng-click="updateproject()" data-dismiss="modal" ng-disabled="editnameform.$invalid">UPDATE</button> 
+									
+									</div>
+																					
+								</div>	
+							
+							</div>
+						
+					</div>
+      
+				</div>
+			</div>
+				
+			</form>	
+		
+			<!-- End Name and Description -->
+	
+			<!--member modal --->
+			
+			
+			<form  id="memberform" ng-model="memberform"  name="memberform" novalidate>	
+			  <div class="modal fade" id="memberModal" role="dialog">
+					<div class="modal-dialog">
+    
+				
+					<div class="modal-content">
+							<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title"><b>ADD MEMBER </b></h4>
+							</div>
+							<div class="modal-body" style="height:200px">
+							
+									<div class="col-md-12 col-sm-12 col-xs-12">
+								
+										<div class="col-md-12 col-sm-12 col-xs-12">
+													<h4>	<label class="control-label">PROJECT MEMBER</label> <h4>
+										</div>
+								
+								
+										<div class="col-md-12 col-sm-12 col-xs-12">
+									
+												<div class="col-md-3 col-sm-3 col-xs-3" >
+																<label class="control-label" >PROJECT OWNER</label>			
+												</div>	
+												<div class="col-md-9 col-sm-9 col-xs-9" >
+									
+															<input type="text" class="form-control" ng-model="owner"  name="owner" required>
+									
+												</div>
+																
+										</div>
+															
+											<div class="col-md-12 col-sm-12 col-xs-12">
+															
+													<div class="col-md-3 col-sm-3 col-xs-3">
+																	<label class="control-label" >MEMBER NAME</label>			
+													</div>
+														<div class="col-md-9 col-sm-9 col-xs-9">
+																	
+															<input type="text" class="form-control" ng-model="membername"  name="membername" required>
+										
+																	<div class="error" ng-show="memberform.membername.$dirty && memberform.membername.$invalid">									
+																				<small class="error" style="color:red" ng-show="memberform.membername.$error.required"> Member Name Is Required</small>
+																	</div>
+																	
+														</div>
+																	
+											</div>
+															
+										<div class="col-md-12 col-sm-12 col-xs-12" style="padding-top:10px;">
+													<div class="col-md-9 col-sm-9 col-xs-9">
+															
+																	<a href="" data-toggle="modal" data-target="" ng-click="" >Member Notification</a>
+															
+													</div>
+													<div class="col-md-3 col-sm-3 col-xs-3">
+																	
+																		<button type="submit" class="btn btn-primary" ng-click="addmember()" data-dismiss="modal" ng-disabled="memberform.$invalid">ADD MEMBER</button> 
+																	
+													</div>
+																	
+									</div>
+							
+							
+							</div>
+						
+					</div>
+      
+				</div>
+			</div>
+		</form>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!--End Member modal-->
+			
+			
+
+			
+							
+							
+							
+							
+							
 				
                     </div>
                 </div>

@@ -8,7 +8,7 @@
 		
 		$delflag="1";
 		
-		$qry1 = $dbConnection->prepare("SELECT * FROM tasck WHERE pid=? AND del_flag=?");
+		$qry1 = $dbConnection->prepare("SELECT * FROM tasck WHERE pid=? AND del_flag=? order by tid desc");
 		$qry1 ->execute(array($projid,$delflag));
 		
 		while($row1 = $qry1->fetch())

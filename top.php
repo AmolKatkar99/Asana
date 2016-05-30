@@ -6,7 +6,7 @@
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="pull-left">				
-					<a href="mytasck.php" class="user-profile">MY TASCK</a>
+					<a href="mytasck.php" class="user-profile">MY TASK</a>
 				
 				</li>	
 				<li class="pull-left">				
