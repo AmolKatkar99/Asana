@@ -67,7 +67,7 @@ $(document).ready(function() {
 												<ul class="dropdown-menu">
 														<li><a href="" data-toggle="modal" data-target="#editnamedesModal" ng-click="editproject()" >Edit Name And Description </a></li>
 														<li class="divider"></li>
-														<li><a href="#">User stats </a></li>
+														<li><a href="" ng-click="deleteproject()" >Delete Project </a></li>
 													
 												</ul>
 											</li>
@@ -139,10 +139,57 @@ $(document).ready(function() {
 						
 								   
 							
-								<button type="submit"  ng-click="addtasck()" class="btn btn-default">Add Task</button> 
+							
 												
-								<button ng-hide="sect" ng-mousemove="showsect()" type="submit"  class="btn btn-default">Add Section</button> 								
+																
 									
+								
+							 <div class="col-md-12 col-sm-12 col-xs-12">
+							 
+									 <div class="col-md-6 col-sm-6 col-xs-6">
+							 
+												<button type="submit"  ng-click="addtasck()" class="btn btn-default">Add Task</button> 
+												<button ng-hide="sect" ng-mousemove="showsect()" type="submit"  class="btn btn-default">Add Section</button> 
+											
+								
+									</div>
+									
+									<div class="col-md-1 col-sm-1 col-xs-1">
+									
+									</div>
+									
+									<div class="col-md-5 col-sm-5 col-xs-5">
+									
+									
+							 
+										
+											
+										<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
+						
+														View :{{viewname}} <span class="glyphicon glyphicon-chevron-down"></span> 
+						
+										</a>
+										<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+												<li><a href="" ng-click="incopletetasklist()"> Incomplete Task </a></li>
+												<li><a href="" ng-click="completetasklist()"> Complete Task </a></li>
+												<li><a href="" ng-click="alltask()"> All Task </a></li>
+												<li><a href="" ng-click="taskduedate()"> Task By Due Date </a></li>
+												<li><a href="" ng-click="taskassignee()"> Task By Assignee </a></li>
+												<li><a href="" ng-click="populartask()"> Popular Task </a></li>
+										</ul>
+											
+											
+											
+											
+											
+											
+									</div>
+									
+								
+							</div>	
+								
+								
+								
 								
 								<div ng-hide="hideprid">
 									<input type="text" id="vprojectid"  value='<?php echo $pidd ?>'/> 	
@@ -151,6 +198,7 @@ $(document).ready(function() {
 									<input type="email" class="form-control" ng-model="sendto"  name="sendto" >
 									<input type="email" class="form-control" ng-model="subsendto"  name="subsendto" >
 									<input type="text"  ng-model="taid"> 
+							
 									
 								</div>
 								
@@ -212,8 +260,52 @@ $(document).ready(function() {
 										<div ng-repeat="tas in tasks">
 											<div class="input-group col-md-12 col-sm-12 col-xs-12">
 										
-												<label class="form-control" ng-click="tasklist(tas.tid)" >{{tas.task}}</label>	
 												
+											<div class="col-md-{{t}} col-sm-{{t}} col-xs-{{t}}">
+												<label class="form-control" > 
+											        	<input type="checkbox"  ng-click="checktask(tas.tid)" /> 
+												</label>
+											</div>	
+												
+											<div class="col-md-{{t1}} col-sm-{{t1}} col-xs-{{t1}}" style="margin-left:-25px;">
+											
+												<div class="input-group">
+											
+																<label class="form-control"   ng-click="tasklist(tas.tid)" >
+																
+																{{tas.task}}   
+																
+															
+																</label>	
+															<span class="input-group-addon">
+															  
+															  
+															  
+																		{{tas.ddate}}
+																		{{tas.assi}}
+																		
+																		
+																		<div ng-show="popht">
+																				<div ng-if="tas.popular == '0'">
+																						<i ng-click="popular(tas.tid,'1')" class="glyphicon glyphicon-heart-empty"></i>
+																				</div>
+																		
+																		</div>
+																		
+																		<div ng-if="tas.popular == '1'">
+																		
+																				<i  ng-click="popular(tas.tid,'0')" class="glyphicon glyphicon-heart"></i>
+																		</div>
+																		
+																		
+					
+															</span>	
+																
+																
+																
+												</div>				
+												
+											</div>	
 											
 											</div>
 										</div>	
@@ -234,7 +326,7 @@ $(document).ready(function() {
 								 <div class="col-md-12 col-sm-12 col-xs-12">
 										
 										<input type="text"  ng-model="decription" style="border: none" > 
-										
+							
 								</div>
 						 
 						 
@@ -267,9 +359,11 @@ $(document).ready(function() {
 									</div>
 									</div>
 								</div>
+				
+							
 								<div class="col-md-1 col-sm-1 col-xs-1">
 								
-											<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
+											<button type="button" ng-click="addfavarate('1')" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
 								
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1">

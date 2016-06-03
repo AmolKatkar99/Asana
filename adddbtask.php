@@ -12,13 +12,15 @@
 		
 		$to =$dat->sendto;
 		
-		$ddate =date('Y-m-d',strtotime($duedate));
+		$startdate = str_replace('/', '-', $duedate);
+		$ddate =date('Y-m-d',strtotime($startdate));
+		$cts =date('Y-m-d');
 		
 		$subject="Assing Task";
 		
 		
-		$qry = $dbConnection->prepare("INSERT INTO tasck(pid,task,assignee,tdescription,duedate) VALUES (?,?,?,?,?)");	
-		$qry->execute(array($pid,$task,$to,$tdecription,$ddate));
+		$qry = $dbConnection->prepare("INSERT INTO tasck(pid,task,assignee,tdescription,duedate,cts) VALUES (?,?,?,?,?,?)");	
+		$qry->execute(array($pid,$task,$to,$tdecription,$ddate,$cts));
 		
 		
          $subject = " Task Assign for You ";

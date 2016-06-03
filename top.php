@@ -11,8 +11,39 @@
 				</li>	
 				<li class="pull-left">				
 					<a href="" class="user-profile">MY INBOX</a>
+					
+				</li>		
+
+				<li class="pull-left">
 				
-				</li>					
+							
+						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
+						
+													<button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-plus-sign"></i></button>
+						
+						</a>
+						<ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+												<li><a href="" data-toggle="modal" data-target="#myTaskShotcut">Task </a></li>
+												<li><a href="" data-toggle="modal" data-target="#myconversation">Conversation </a></li>
+												<li><a href="" data-toggle="modal" data-target="#myModal">Project </a></li>
+						</ul>
+				
+				
+				
+								
+				
+				
+				
+				</li>
+				
+				
+		
+
+				
+
+
+
+				
 				<li>	
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
 						Welcome <strong></strong>&nbsp;&#124;&nbsp;<?php echo $_SESSION['user_name']; ?> <span class=" fa fa-angle-down"></span>

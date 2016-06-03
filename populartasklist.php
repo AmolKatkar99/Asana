@@ -4,13 +4,10 @@
 		include "dbc/db_connection.php";			
 		$dat = json_decode(file_get_contents("php://input")); 
 		
-		$projid = $dat->projid; 
+
 		
-		$delflag="1";
-		$cmpid ="1";
-		
-		$qry1 = $dbConnection->prepare("SELECT * FROM tasck WHERE pid=? AND comid=? AND del_flag=? order by tid desc");
-		$qry1 ->execute(array($projid,$cmpid,$delflag));
+		$qry1 = $dbConnection->prepare("SELECT * FROM tasck  order by popular DESC");
+		$qry1 ->execute(array());
 		
 		while($row1 = $qry1->fetch())
 		{
@@ -22,6 +19,6 @@
 			
 		}
 		
-		echo (json_encode($data));
+		echo (json_encode($data)); 
 		
-?>		
+?>

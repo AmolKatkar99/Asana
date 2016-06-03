@@ -39,13 +39,47 @@ preopcheck.controller('preopController', function ($scope, $http)
 
 	$scope.addnewpTask=function(dt)
 	{
-
 		$http.post("addpersonaltask.php",{"task":$scope.ptask,"uname":$scope.username,"ddate":dt,"desc":$scope.taskdescription})
 		.success(function(data){
 			
 		});
-
+		
 	}
+	
+	$scope.addnewshotpTask=function(dt1)
+	{
+	
+	
+		$http.post("addpersonaltask.php",{"task":$scope.ptask1,"uname":$scope.username,"ddate":dt1,"desc":$scope.taskdescription1})
+		.success(function(data){
+			
+			$scope.ptask1="";
+			$scope.taskdescription1="";
+			$scope.dedate1="";
+			
+			
+			$http.post("getpresanalTask.php",{"projid":$scope.projid}).success(function(data){
+			
+				$scope.ptasks = data;
+				$scope.pstid=data[0]['ptid'];
+				
+			});
+			
+			
+			
+			
+		});
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -152,7 +186,14 @@ preopcheck.controller('preopController', function ($scope, $http)
 	}
 	
 	
-	
+
+	$scope.conver=function()
+	{
+		
+		
+		
+		
+	}
 	
 
 
@@ -164,6 +205,14 @@ preopcheck.controller('preopController', function ($scope, $http)
 	
 	
 	//sdebar js
+	
+	
+
+	
+	
+	
+	
+	
 	$scope.adddesc=false;
 	$scope.uname=false;
 	$scope.hideid=false;

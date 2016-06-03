@@ -15,7 +15,9 @@ preopcheck.controller('preopController', function ($scope, $http)
 	$scope.adtask=true;
 	$scope.attfile=false;
 	$scope.scomment=false;
-
+	$scope.t=1;
+	$scope.t1=11;
+	$scope.popht=false;
 	
 	
 	
@@ -47,8 +49,11 @@ preopcheck.controller('preopController', function ($scope, $http)
 			$scope.a=6;
 			$scope.dydiveA=false;
 			$scope.dydiveB=true;
+			$scope.t=2;
+			$scope.t1=10;
 		
 		$scope.taid=tid;
+		
 		
 		
 		
@@ -199,6 +204,9 @@ preopcheck.controller('preopController', function ($scope, $http)
 			$scope.a=6;
 			$scope.dydiveA=false;
 			$scope.dydiveB=true;
+			$scope.t=2;
+			$scope.t1=10;
+		
 			
 		if($scope.taskInput==null)
 		{
@@ -284,6 +292,48 @@ preopcheck.controller('preopController', function ($scope, $http)
 		
 	}
 
+	
+	$scope.deleteproject=function()
+	{
+		
+	
+		
+		
+		var answer = confirm("Do you want to Delete Project?")
+		if (!answer)
+		{               
+		}
+		else
+		{
+			
+			
+				$http.post('deleteproject.php', {"projid":$scope.projid}).
+					success(function(data, status) 
+					{
+			
+						//	window.location.href = "welcome.php";
+
+					})
+					
+					
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	$scope.addmember=function()
 	{
@@ -373,10 +423,206 @@ preopcheck.controller('preopController', function ($scope, $http)
 		
 	}
 	
+	$scope.addfavarate=function(popid)
+	{
+		    
+			
+			$http.post('addpopular.php', {"tid":$scope.taid,"popid":popid}).
+					success(function(data, status) 
+					{
+								$http.post("getTask.php",{"projid":$scope.projid}).success(function(data){
+			
+										$scope.tasks = data;
+				
+								});
+										
+					})		
+		
+	
+		
+	}
+	
+
+	
+	
+	$scope.viewname="Incomplete Task";
+	
+	$scope.incopletetasklist=function()
+	{
+		$scope.viewname="Incomplete Task";
+			
+		$http.get('incopletetasklist.php').
+			success(function(data, status) 
+			{
+						$scope.tasks = data;
+		
+			})
+		
+		
+	}
+	
+	
+
+	$scope.completetasklist=function()
+	{
+		$scope.viewname="Complete Task";
+			
+		$http.get('completetasklist.php').
+			success(function(data, status) 
+			{
+					
+						$scope.tasks = data;
+		
+			})
+		
+	}
+	
+
+	
+
+	$scope.alltask=function()
+	{
+			$scope.viewname="All Task";
+				
+		    $http.get('alltasklist.php').
+			success(function(data, status) 
+			{
+						$scope.tasks = data;
+			})
+			
+			
+		
+	}
+	
+	$scope.taskduedate=function()
+	{
+		$scope.viewname="Task By Due Date";
+	
+		
+		    $http.get('duedatetasklist.php').
+			success(function(data, status) 
+			{
+						$scope.tasks = data;
+			})	
+	}
+	
+	$scope.taskassignee=function()
+	{
+		$scope.viewname="Task By Assignee";
+	
+		
+		    $http.get('assitasklist.php').
+			success(function(data, status) 
+			{
+						$scope.tasks = data;
+			})
+		
+		
+		
+		
+	}
+	
+	$scope.populartask=function()
+	{
+		$scope.viewname="Popular Task";
+		$scope.popht=true;	
+			
+		 $http.get('populartasklist.php').
+			success(function(data, status) 
+			{
+						$scope.tasks = data;
+			})	
+	
+	
+		
+	}
+	
+	$scope.popular=function(tid,popid)
+	{
+
+	
+		$http.post('addpopular.php', {"tid":tid,"popid":popid}).
+						success(function(data, status) 
+						{
+								 $http.get('populartasklist.php').
+									success(function(data, status) 
+									{
+												$scope.tasks = data;
+									})	
+	
+	
+						})
+						
+		
+	}
+	
+	
+	
+	$scope.checktask=function(taskid)
+	{
+		
+	
+		$http.post('completetask.php', {"taskid":taskid}).
+					success(function(data, status) 
+					{
+					
+						$http.post("getTask.php",{"projid":$scope.projid}).success(function(data){
+			
+								$scope.tasks = data;
+				
+						});
+						
+					})
+	
+	}
 	
 	
 	
 	//sdebar js
+	
+	//top add Task
+
+	
+	$scope.addnewshotpTask=function(dt1)
+	{
+	
+		$http.post("addpersonaltask.php",{"task":$scope.ptask1,"uname":$scope.username,"ddate":dt1,"desc":$scope.taskdescription1})
+		.success(function(data){
+			
+			$scope.ptask1="";
+			$scope.taskdescription1="";
+			$scope.dedate1="";
+			
+			
+			$http.post("getpresanalTask.php",{"projid":$scope.projid}).success(function(data){
+			
+				$scope.ptasks = data;
+				$scope.pstid=data[0]['ptid'];
+				
+			});
+			
+			
+			
+			
+		});
+	
+		
+	}
+	
+	
+	$scope.conver=function()
+	{
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	$scope.adddesc=false;
 	$scope.uname=false;
 	$scope.hideid=false;
